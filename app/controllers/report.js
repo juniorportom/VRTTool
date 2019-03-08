@@ -33,7 +33,7 @@ function saveReport(req, res) {
     console.log(params.files);
 
     report.image1 = params.image1;
-    report.image2 = params.imag2;
+    report.image2 = params.image2;
     report.imageDiff = params.imageDiff;
     report.date = Date.now();
     report.create_at = Date.now(); //moment().unix();
@@ -76,7 +76,7 @@ function getReports(req, res) {
 
 function getImageFile(req, res) {
     var imageFile = req.params.imageFile;
-    var pathImage = './uploads/reports/' + imageFile;
+    var pathImage = 'app/uploads/reports/' + imageFile;
     fs.exists(pathImage, (exists) => {
         console.log(pathImage);
         if (exists) {

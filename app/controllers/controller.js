@@ -87,6 +87,7 @@ VRTTool.controller('reportController', function($scope, $http, $location) {
 VRTTool.controller('reportListController', function($scope, $http, ReportId) {
     $scope.title = 'Listar Reportes';
     $scope.status = '';
+    $scope.url = 'http://localhost:8080/';
     //$scope.required = true;
 
     $scope.init = function() {
