@@ -1,0 +1,50 @@
+<div ng-controller="reportController" class="content">
+
+    <nav class="navbar navbar-default ">
+        <div class=" container ">
+            <div class="navbar-header nav-title ">
+                <a class="navbar-brand" href="#home">VRT Tool</a>
+            </div>
+            <div class="main-nav">
+                <ul>
+                    <li><a href="#reportList"><i class="fa fa-shield"></i>Reportes</a></li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <div class="col-lg-5">
+        <h1 class="h1-strong">{{title}}</h1>
+        <div class="alert alert-success" ng-if="status=='success'">
+            Reporte registrado correctamente
+        </div>
+        <div class="alert alert-danger" ng-if="status=='fail'">
+            No se ha podido registrar el reporte.
+        </div>
+        <div class="alert alert-danger" ng-if="status=='incomplete'">
+            Por favor diligencie el formulario
+        </div>
+        <form name="reportForm" class="col-lg-12" ng-submit="addReport(reportForm.$valid)" novalidate>
+            <div>
+                <label for="image1">Imagen 1*</label>
+                <input type="file" name="image1" ng-model="report.image1" class="form-control" required>
+
+            </div>
+            <div>
+                <label for="image2">Imagen 2*</label>
+                <input type="file" name="image2" ng-model="report.image2" class="form-control" required>
+
+            </div>
+            <div>
+                <label for="imageDiff">Diferencias*</label>
+                <input type="file" name="imageDiff" ng-model="report.imageDiff" class="form-control" required>
+
+            </div>
+            <input type="submit" value="{{title}}" class="btn btn-success">
+        </form>
+
+    </div>
+</div>
