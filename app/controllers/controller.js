@@ -61,10 +61,17 @@ VRTTool.controller('reportController', function($scope, $http, $location) {
 
 
     $scope.addReport = function(isValid) {
-        if (true) {
-            $http.post('/report', $scope.report).then(function onSuccess(response) {
-                console.log($scope.report);
-                console.log(response);
+        if (isValid) {
+            var formData = new FormData();
+            formData.append("image1", $scope.image1);
+            formData.append("image2", $scope.image2);
+            formData.append("imageDiff", $scope.imageDiff);
+            $http.post('/report', formData, {
+                headers: {
+                    "Content-type": undefined
+                },
+                transformRequest: angular.identity
+            }).then(function onSuccess(response) {
                 $scope.report = response.data;
                 if (response.status == 200) {
                     $scope.status = 'success';
@@ -83,6 +90,16 @@ VRTTool.controller('reportController', function($scope, $http, $location) {
     };
 });
 
+VRTTool.directive('uploaderModel', ["$parse", function($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, iElement, iAttrs) {
+            iElement.on("change", function(e) {
+                $parse(iAttrs.uploaderModel).assign(scope, iElement[0].files[0]);
+            });
+        }
+    };
+}]);
 
 VRTTool.controller('reportListController', function($scope, $http, ReportId) {
     $scope.title = 'Listar Reportes';

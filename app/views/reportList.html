@@ -1,6 +1,4 @@
 <div ng-controller="reportListController" ng-init="init()">
-
-
     <nav class="navbar navbar-default ">
         <div class=" container ">
             <div class="navbar-header nav-title ">
@@ -11,10 +9,8 @@
                     <li><a href="#report"><i class="fa fa-shield"></i>Crear Reporte</a></li>
                 </ul>
             </div>
-
         </div>
     </nav>
-
     <div id="reports" class="col-lg-12 w-100">
         <div ng-if="!reports || reports.length == 0">
             <h4>No tiene reportes registrados</h4>
@@ -25,7 +21,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <span class="date" am-time-ago="report.create_at"></span><br>
-                            <h5>{{report.date}}</h5>
+                            <h6><b>Fecha de reporte: </b>{{report.date | date:'medium'}}</h6>
                         </div>
                         <div class="col-lg-3">
                             <img class="img-st" src="{{url + 'get-image/' + report.image1}}">

@@ -22,7 +22,12 @@ function home(req, res) {
     });
 }
 
-
+function nameFile(file) {
+    var filePath = file.path;
+    var fileSplit = filePath.split(/[\\/]/);
+    var fileName = fileSplit.pop();
+    return fileName;
+}
 
 
 // Registro de reporte
@@ -30,11 +35,16 @@ function saveReport(req, res) {
     var params = req.body;
     var report = new Report();
 
-    console.log(params.files);
+    console.log('estoy aca!!!!!!!!!!!!!!!!!!');
 
-    report.image1 = params.image1;
-    report.image2 = params.image2;
-    report.imageDiff = params.imageDiff;
+    console.log(req.body);
+    console.log(req.files);
+
+
+
+    report.image1 = nameFile(req.files.image1);
+    report.image2 = nameFile(req.files.image2);
+    report.imageDiff = nameFile(req.files.imageDiff);
     report.date = Date.now();
     report.create_at = Date.now(); //moment().unix();
 
