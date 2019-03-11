@@ -51,21 +51,21 @@ VRTTool.controller('reportController', function($scope, $http, $location) {
     $scope.title = 'Crear Reporte';
     $scope.image1 = '';
     $scope.image2 = '';
-    $scope.imageDiff = '';
+    //$scope.imageDiff = '';
     //$scope.required = true;
     $scope.report = {
         image1: '',
-        image2: '',
-        imageDiff: ''
+        image2: '' //,
+            //imageDiff: ''
     };
 
 
     $scope.addReport = function(isValid) {
-        if (isValid) {
+        if (true) {
             var formData = new FormData();
             formData.append("image1", $scope.image1);
             formData.append("image2", $scope.image2);
-            formData.append("imageDiff", $scope.imageDiff);
+            //formData.append("imageDiff", $scope.imageDiff);
             $http.post('/report', formData, {
                 headers: {
                     "Content-type": undefined

@@ -2,19 +2,19 @@
 
 var Report = require('../models/report');
 
+var ResCompare = require('./resemble-compare');
+
 var bcrypt = require('bcrypt-nodejs');
 
 var path = require('path');
 
 var fs = require('fs');
 
-//var jwt = require('../services/jwt');
+const { exec } = require('child_process');
+
+const cy = require('cypress');
 
 var mongoosePaginate = require('mongoose-pagination');
-
-//var fs = require('fs');  // Libreria de file systemn de Node
-
-//var path = require('path');  //Libreria para el manejo de rutas
 
 function home(req, res) {
     res.status(200).send({
@@ -29,22 +29,16 @@ function nameFile(file) {
     return fileName;
 }
 
-
 // Registro de reporte
 function saveReport(req, res) {
-    var params = req.body;
     var report = new Report();
-
-    console.log('estoy aca!!!!!!!!!!!!!!!!!!');
-
-    console.log(req.body);
-    console.log(req.files);
-
-
-
     report.image1 = nameFile(req.files.image1);
     report.image2 = nameFile(req.files.image2);
-    report.imageDiff = nameFile(req.files.imageDiff);
+    let name = new Date().getTime() + '-diff.png';
+    console.log('este es el nombre: ' + name);
+    let imageWithDiff = 'app/uploads/reports/' + name;
+    ResCompare.getDiff(req.files.image1.path, req.files.image2.path, imageWithDiff);
+    report.imageDiff = name;
     report.date = Date.now();
     report.create_at = Date.now(); //moment().unix();
 
@@ -54,6 +48,49 @@ function saveReport(req, res) {
         if (!reportStored) return res.status(404).send({ message: 'El reporte no ha sido guardado' });
 
         return res.status(200).send({ report: reportStored });
+    });
+}
+
+function autoSaveReport(req, res) {
+    exec('npx cypress run', (err, stdout, stderr) => {
+        if (err) {
+            console.log(error);
+            return;
+        }
+
+        let longTime = new Date().getTime();
+        var report = new Report();
+        let path_cypress = 'cypress/screenshots/palette/collors_palette_spec.js/';
+        let path_imgs = 'app/uploads/reports/';
+        let img1 = 'palette-1.png';
+        let img2 = 'palette-2.png';
+        let imgDiff = longTime + '_diff.png';
+
+        fs.rename(path.join(path_cypress, img1), path.join(path_imgs, longTime + img1), (err) => {
+            if (err) throw err;
+            console.log('Se renombra imagen 1');
+        });
+
+        fs.rename(path.join(path_cypress, img2), path.join(path_imgs, longTime + img2), (err) => {
+            if (err) throw err;
+            console.log('Se renombra imagen 2');
+        });
+
+        ResCompare.getDiff(path_imgs + longTime + img1, path_imgs + longTime + img2, path_imgs + imgDiff);
+
+        report.image1 = longTime + img1;
+        report.image2 = longTime + img2;
+        report.imageDiff = imgDiff;
+        report.date = Date.now();
+        report.create_at = Date.now(); //moment().unix();
+
+        report.save((error, reportStored) => {
+            if (error) return res.status(500).send({ message: 'Error al guardar el reporte' });
+
+            if (!reportStored) return res.status(404).send({ message: 'El reporte no ha sido guardado' });
+
+            return res.status(200).send({ report: reportStored });
+        });
     });
 }
 
@@ -100,5 +137,6 @@ function getImageFile(req, res) {
 module.exports = {
     saveReport,
     getReports,
-    getImageFile
+    getImageFile,
+    autoSaveReport
 }

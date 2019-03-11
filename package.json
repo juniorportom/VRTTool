@@ -14,10 +14,13 @@
         "bcrypt-nodejs": "0.0.3",
         "body-parser": "^1.18.3",
         "connect-multiparty": "^2.1.1",
+        "cypress": "^3.1.5",
         "express": "^4.16.3",
         "moment": "^2.22.2",
         "mongoose": "^5.0.3",
-        "mongoose-pagination": "^1.0.0"
+        "mongoose-pagination": "^1.0.0",
+        "mz": "^2.7.0",
+        "resemblejs": "^3.0.2"
     },
     "devDependencies": {
         "nodemon": "^1.18.3"
