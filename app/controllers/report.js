@@ -52,8 +52,8 @@ function saveReport(req, res) {
 }
 
 function autoSaveReport(req, res) {
-    exec('npx cypress run', (err, stdout, stderr) => {
-        if (err) {
+    exec('npx cypress run', (error, stdout, stderr) => {
+        if (error) {
             console.log(error);
             return;
         }
