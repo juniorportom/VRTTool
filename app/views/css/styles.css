@@ -262,3 +262,11 @@ footer p {
     width: 90%;
     height: 90%;
 }
+
+.btn-color {
+    background-color: #00aced;
+    color: #FFF;
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 20px;
+}

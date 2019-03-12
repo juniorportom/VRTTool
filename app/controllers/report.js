@@ -125,7 +125,7 @@ function getImageFile(req, res) {
     var imageFile = req.params.imageFile;
     var pathImage = 'app/uploads/reports/' + imageFile;
     fs.exists(pathImage, (exists) => {
-        console.log(pathImage);
+        //console.log(pathImage);
         if (exists) {
             return res.sendFile(path.resolve(pathImage));
         } else {

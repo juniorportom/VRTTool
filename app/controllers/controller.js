@@ -119,8 +119,25 @@ VRTTool.controller('reportListController', function($scope, $http, ReportId) {
         });
     };
 
+    $scope.autoReport = function() {
+        $http.post('/auto-report/').then(function onSuccess(response) {
+            console.log(response);
+            $scope.reports = response.data.reports.sort(compare);
+            if (response.status == 200) {
+                $scope.status = 'success';
+                location.reload();
+            }
+        }).catch(function onError(response) {
+            console.log(response);
+        });
+    }
+
     function compare(a, b) {
         return (b.create_at - a.create_at);
+    }
+
+    $scope.reload = function() {
+        location.reload();
     }
 
 });

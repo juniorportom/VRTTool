@@ -12,6 +12,9 @@
         </div>
     </nav>
     <div id="reports" class="col-lg-12 w-100">
+        <div class="pull-right options-event ">
+            <a class="btn btn-color" href="#reportList" ng-click="autoReport()">Generar Reporte Automático Paleta de Colores</a>
+        </div>
         <div ng-if="!reports || reports.length == 0">
             <h4>No tiene reportes registrados</h4>
         </div>
